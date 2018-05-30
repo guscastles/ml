@@ -18,9 +18,5 @@ def error(expected, actual):
     return df, df.describe()['err']['max']
 
 
-def predict(training_values, training_targets):
-    machine = train_the_machine(training_values, training_targets)
-    return machine.predict(training_values)
-
-
-
+def predict(machine, test_values):
+    return machine.predict(test_values)

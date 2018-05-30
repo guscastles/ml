@@ -38,6 +38,7 @@ def test_train_the_machine():
 @pytest.mark.linreg
 def test_predict():
     train_x, test_x, train_y, test_y = dp.training_set(*dp.features_and_dependent_vars(dp.import_data(DATA_FILE)), test_size=1/3)
-    predicted = predict(train_x, train_y)
+    machine = train_the_machine(train_x, train_y)
+    predicted = predict(machine, train_x)
     data, max_error = error(train_y, predicted)
-    assert max_error < 0.2
+    assert max_error < 0.16
