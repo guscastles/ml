@@ -41,4 +41,5 @@ def test_predict():
     machine = train_the_machine(train_x, train_y)
     predicted = predict(machine, train_x)
     data, max_error = error(train_y, predicted)
-    assert max_error < 0.16
+    assert max_error < 0.2
+    assert data['err'].mean() < 0.1

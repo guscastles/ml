@@ -3,8 +3,6 @@ Data preprocessing module
 """
 from os import sep
 import pandas as pd
-import numpy as np
-import matplotlib as plt
 from sklearn.preprocessing import Imputer, LabelEncoder, OneHotEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 
@@ -48,14 +46,14 @@ def encode_feature(matrix, rows=slice(None, None), col=0):
     return matrix
 
 
-def create_dummy_variables(matrix, columns=[0]):
+def create_dummy_variables(matrix, columns):
     spread_encoder = OneHotEncoder(categorical_features=columns)
     return spread_encoder.fit_transform(matrix).toarray()
 
 
 def encode_data(data):
     matrix, dep_vars = cleanup_data(data)
-    feature_matrix_with_dummies = create_dummy_variables(encode_feature(matrix))
+    feature_matrix_with_dummies = create_dummy_variables(encode_feature(matrix), [0])
     dependent_var_array = encode_feature(dep_vars)
     return matrix, feature_matrix_with_dummies, dependent_var_array
 
@@ -70,8 +68,8 @@ def feature_scaling(train_set, test_set):
     return scaler.fit_transform(train_set), scaler.transform(test_set)
 
 
-def run(): 
-    matrix, feature_matrix_with_dummies, dependent_var_array = encode_data(import_data())
+def run():
+    _, feature_matrix_with_dummies, dependent_var_array = encode_data(import_data())
     train_set, test_set, dep_train_set, dep_test_set = training_set(feature_matrix_with_dummies, dependent_var_array)
     scaled_train_set, scaled_test_set = feature_scaling(train_set, test_set)
     return scaled_train_set, scaled_test_set, dep_train_set, dep_test_set

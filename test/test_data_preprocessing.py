@@ -29,7 +29,7 @@ def test_cleanup_data():
 def test_categorical_data():
     matrix = encode_feature(cleanup_data(import_data())[0], slice(None, None), 0)
     assert set(matrix[:, 0]) == {0, 1, 2}
-    assert create_dummy_variables(matrix).shape == (10, 5)
+    assert create_dummy_variables(matrix, [0]).shape == (10, 5)
 
 
 def test_encode_data():
