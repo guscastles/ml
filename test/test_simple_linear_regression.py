@@ -3,29 +3,12 @@ Test module for the simple linear regression, the simplest machine to create a m
 """
 import pytest
 import pandas as pd
+from ml import data_preprocessing as dp
+from ml.simple_linear_regression import predict, error, train_the_machine
 from sklearn.linear_model import LinearRegression
-from ..ml import data_preprocessing as dp
 
 
 DATA_FILE = 'Machine Learning A-Z Template Folder/Part 2 - Regression/Section 4 - Simple Linear Regression/Simple_Linear_Regression/Simple_Linear_Regression/Salary_Data.csv'
-
-
-def train_the_machine(training_values, training_target):
-    regressor = LinearRegression()
-    regressor.fit(training_values, training_target)
-    return regressor
-
-
-def error(expected, actual):
-    df = pd.DataFrame(expected, columns=['Target'])
-    df['Predicted'] = pd.DataFrame(actual)
-    df['err'] = abs(df['Target'] - df['Predicted'])/df['Target']
-    return df, df.describe()['err']['max']
-
-
-def predict(training_values, training_targets, test_values):
-    machine = train_the_machine(training_values, training_targets)
-    return machine.predict(test_values)
 
 
 @pytest.mark.linreg
@@ -55,6 +38,6 @@ def test_train_the_machine():
 @pytest.mark.linreg
 def test_predict():
     train_x, test_x, train_y, test_y = dp.training_set(*dp.features_and_dependent_vars(dp.import_data(DATA_FILE)), test_size=1/3)
-    predicted = predict(train_x, train_y, test_x)
-    data, max_error = error(test_y, predicted)
-    assert max_error < 0.16
+    predicted = predict(train_x, train_y)
+    data, max_error = error(train_y, predicted)
+    assert max_error < 0.2

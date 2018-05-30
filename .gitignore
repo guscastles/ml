@@ -1,0 +1,4 @@
+*/__pycache__/
+*.lock
+.pytest_cache/
+.ipynb*
