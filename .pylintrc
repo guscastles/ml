@@ -1,0 +1,3 @@
+[ML]
+no-docstring-rgx=^.
+max-line-length=120
